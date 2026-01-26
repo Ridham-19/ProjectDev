@@ -1,0 +1,13 @@
+PACKAGES FOR BACKEND 
+
+bcrypt: For hashing and securing the passwords
+cookie-parser: Used to access JWT tokens
+cors: To connect backend with frontend
+dotenv: To secure environmental variables
+express: Framework of nodejs 
+express-fileupload: Used for uploading of files
+express-rate-limit: Used for limiting requests to backend
+jsonwebtoken: Used to generate JWT token
+mongoose: Used to connect with MongoDB
+multer: Used for file management
+nodemailer: Used for sending emails
