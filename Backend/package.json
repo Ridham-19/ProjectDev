@@ -9,7 +9,7 @@
   "license": "ISC",
   "author": "Ridham",
   "type": "module",
-  "main": "index.js",
+  "main": "backend.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node backend.js",
