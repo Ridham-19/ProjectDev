@@ -1,5 +1,7 @@
 PACKAGES FOR BACKEND 
 
+npm install bcrypt cookie-parser cors dotenv express express-fileupload express-rate-limit jsonwebtoken mongoose multer nodemailer
+
 bcrypt: For hashing and securing the passwords
 cookie-parser: Used to access JWT tokens
 cors: To connect backend with frontend
