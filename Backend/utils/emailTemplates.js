@@ -41,13 +41,12 @@ export function getResetPasswordEmailTemplate(resetPasswordUrl) {
             <footer style="margin-top: 30px; text-align: center; font-size: 14px; color: #6b7280;">
                 <p>
                     Thank you,<br>
-                    <strong>📚 BookWorm Team</strong>
+                    <strong>📚 ProjectDev Team</strong>
                 </p>
                 <p style="font-size: 12px; color: #9ca3af;">
                     This is an automated message. Please do not reply to this email.
                 </p>
             </footer>
-
         </div>
 `;
 
