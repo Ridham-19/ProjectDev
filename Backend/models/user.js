@@ -69,9 +69,9 @@ const userSchema = new mongoose.Schema({
 
 // <--- encrypting the password before saving the user --->
 
-userSchema.pre("save", async function(next) {
+userSchema.pre("save", async function() {
     if(!this.isModified("password")){
-        return next();
+        return;
     }
     this.password = await bcrypt.hash(this.password, 10);
 });
@@ -98,7 +98,6 @@ userSchema.methods.getResetPasswordToken = function() {
     this.resetPasswordToken = crypto.createHash("sha256").update(resetToken).digest("hex");
 
     this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;  // expire time 15 mins.
-
     return resetToken;
 }
 

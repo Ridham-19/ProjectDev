@@ -4,6 +4,7 @@ import { User } from "../models/user.js";
 import { getResetPasswordEmailTemplate } from "../utils/emailTemplates.js";
 import { generateToken } from "../utils/generateToken.js";
 import crypto from "crypto";
+import { sendEmail } from "../services/emailService.js";
 
 // <--- Register User --->
 
@@ -51,7 +52,7 @@ export const login = asyncHandler(async (req, res, next) => {
 
 // <--- Logout User --->
 
-export const logout = asyncHandler(async (req, res, next) => {
+export const logout = (req, res) => {
     res
     .status(200)
     .cookie("token", "", {
@@ -62,7 +63,7 @@ export const logout = asyncHandler(async (req, res, next) => {
         success: true,
         message: "Logged Out Successfully",
     })
-});
+};
 
 
 export const getUser = asyncHandler(async (req, res, next) => {
