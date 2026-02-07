@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
-import "../src/app.css";
 
 // Auth Pages
 import LoginPage from "./pages/auth/LoginPage";
