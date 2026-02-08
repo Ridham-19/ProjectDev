@@ -94,7 +94,8 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
     try{
         await sendEmail({
             to: user.email,
-            subject: "ProjectDev - 🔐 Password Recovery",
+            // subject: "ProjectDev - 🔐 Password Recovery",
+            subject: "Happy Birthday! 🎂🎉",
             message,
         });
         res.status(200).json({
