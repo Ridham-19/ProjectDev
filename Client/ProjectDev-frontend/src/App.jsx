@@ -44,6 +44,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPasswordPage/>}></Route> 
         <Route path="/reset-password" element={<ResetPasswordPage/>}></Route> 
       </Routes>
+      <ToastContainer theme="dark"/>
     </BrowserRouter>
   );
 };
