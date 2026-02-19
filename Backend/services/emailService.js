@@ -12,10 +12,11 @@ export const sendEmail = async ({to, subject, message}) => {
             service: process.env.SMTP_SERVICE,
         });
         const mailOptions = {
-            // from: `ProjectDev Admin: ${process.env.SMTP_USER}`,
-            from: `"HAPPY BIRTHDAY🎁" 😊 <${process.env.SMTP_USER}>`,
+            from: `ProjectDev Admin: ${process.env.SMTP_USER}`,
+            // from: `"HAPPY BIRTHDAY🎁" 😊 <${process.env.SMTP_USER}>`,
             to,
-            subject: "Happy Birthday! 🎂",
+            subject,
+            // subject: "Happy Birthday! 🎂",
             html: message,
         };
         const info = await transporter.sendMail(mailOptions);
