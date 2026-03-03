@@ -14,7 +14,6 @@ const server = app.listen(PORT, () => {
 });
 
 
-
 /* <---- ERROR HANDLING -----> */
 
 process.on("unhandledRejection",(err) => {

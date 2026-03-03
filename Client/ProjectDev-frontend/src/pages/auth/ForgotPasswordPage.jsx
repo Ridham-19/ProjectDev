@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { Label } from "@/components/ui/label";
+import { forgotPassword } from "@/store/slices/authSlice";
 
 const ForgotPasswordPage = () => {
   const [email,setEmail] = useState("")
@@ -30,7 +31,7 @@ const ForgotPasswordPage = () => {
     setError("")
 
     try {
-      //await dispatch(forgotPassword({email})).unwrap();
+      await dispatch(forgotPassword({email})).unwrap();
       setIsSubmitted(true);
     } catch (error) {
       setError(error || "Failed to send reset link. Please try again later.")
@@ -115,7 +116,7 @@ const ForgotPasswordPage = () => {
         <p className="text-slate-600 mt-2">Enter your email address and we'll send you a link to reset your password</p>
       </div>
 
-      {/* Login Form */}
+      {/* Forgot Password Form */}
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-gray-200 p-8 space-y-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
