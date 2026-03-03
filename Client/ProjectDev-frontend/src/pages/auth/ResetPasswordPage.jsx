@@ -114,7 +114,6 @@ const ResetPasswordPage = () => {
             </div>
           )}
 
-
           {/* New Password */}
 
           <div className='w-full max-w-md space-y-2'>
