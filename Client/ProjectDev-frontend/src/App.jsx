@@ -32,9 +32,26 @@ import DeadlinesPage from "./pages/admin/DeadlinesPage";
 import ProjectsPage from "./pages/admin/ProjectsPage";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { Loader } from "lucide-react";
+import { Spinner } from "./components/ui/spinner";
+import { getUser } from "./store/slices/authSlice";
 
 const App = () => {
+
+  const {authUser,isCheckingAuth} = useSelector(state => state.auth);
+
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    dispatch(getUser());
+  }, [dispatch])
+
+  if(isCheckingAuth && !authUser) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spinner/>
+      </div>
+    )
+  }
 
   return (
     <BrowserRouter >

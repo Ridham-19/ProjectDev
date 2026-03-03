@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { KeyRound } from "lucide-react";
@@ -10,7 +10,7 @@ import { forgotPassword } from "@/store/slices/authSlice";
 
 const ForgotPasswordPage = () => {
   const [email,setEmail] = useState("")
-  const [isSubmitted, setIsSubmitted] = useState("")
+  const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState("")
 
   const {isRequestingForToken} = useSelector((state) => state.auth)
@@ -24,7 +24,7 @@ const ForgotPasswordPage = () => {
       setError("Email is required")
       return;
     } 
-    if(!/\S+@\S+\.\S+/.test(formData.email)){
+    if(!/\S+@\S+\.\S+/.test(email)){
       setError("Email is invalid");
       return;
     }
@@ -37,6 +37,8 @@ const ForgotPasswordPage = () => {
       setError(error || "Failed to send reset link. Please try again later.")
     }
   };
+
+  const id = useId();
 
 
   if(isSubmitted) {
@@ -80,13 +82,13 @@ const ForgotPasswordPage = () => {
 
             {/* Buttons */}
             <div className="space-y-3">
-              <Button asChild className="w-full">
+              <Button asChild className="w-full bg-blue-500 hover:bg-blue-600">
                 <Link to="/login">Back to Login</Link>
               </Button>
 
               <Button
                 variant="outline"
-                className="w-full"
+                className="w-full text-blue-500 hover:text-blue-600 hover:border-blue-500"
                 onClick={() => {
                   setIsSubmitted(false);
                   setEmail("");
