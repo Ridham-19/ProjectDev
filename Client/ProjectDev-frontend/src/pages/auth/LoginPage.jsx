@@ -26,7 +26,7 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "Student",
+    role: "student",
   });
 
   const [errors, setErrors] = useState({})
@@ -204,7 +204,7 @@ const LoginPage = () => {
           {/* Forgot password link */}
 
           <div className="text-right">
-            <Link tp={"forgot-password"} className="text-sm text-blue-600 hover:text-blue-500">
+            <Link to={"/forgot-password"} className="text-sm text-blue-600 hover:text-blue-500">
               Forgot your password?
             </Link>
           </div>

@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Spinner } from "@/components/ui/spinner";
 import { Input } from '@/components/ui/input';
-import { KeyRound } from "lucide-react";
+import {KeyRound, EyeIcon, EyeOffIcon } from "lucide-react";
+import { resetPassword } from "@/store/slices/authSlice";
 
 const ResetPasswordPage = () => {
 
@@ -53,10 +54,10 @@ const ResetPasswordPage = () => {
       newErrors.password = "Password must be at least 8 characters";
     }
     if(!formData.confirmPassword){
-      newErrors.password = "Confirm Password is required";
+      newErrors.confirmPassword = "Confirm Password is required";
     } 
     else if(formData.password !== formData.confirmPassword){
-      newErrors.password = "Passwords do not match";
+      newErrors.confirmPassword = "Passwords do not match";
     }
 
     setErrors(newErrors);
@@ -81,6 +82,14 @@ const ResetPasswordPage = () => {
         setErrors({general: error || "Failed to reset password. Please try again"})
       }
   };
+
+  const id = useId();
+
+  // For password section
+  const [isVisible, setIsVisible] = useState(false);
+
+  // For confirm Password section
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   return (
   <>
@@ -110,9 +119,10 @@ const ResetPasswordPage = () => {
 
           <div className='w-full max-w-md space-y-2'>
             <Label htmlFor={id}>New Password</Label>
+            <div className="relative">
             <Input 
             id={id} 
-            type='password' 
+            type={isVisible ? 'text' : 'password'} 
             placeholder='Enter new password' 
             name="password" 
             value={formData.password} 
@@ -134,6 +144,7 @@ const ResetPasswordPage = () => {
               {isVisible ? <EyeOffIcon /> : <EyeIcon />}
               <span className='sr-only'>{isVisible ? 'Hide password' : 'Show password'}</span>
             </Button>
+            </div>
           </div>
 
 
@@ -144,7 +155,7 @@ const ResetPasswordPage = () => {
             <div className='relative'>
             <Input 
             id={id} 
-            type={isVisible ? 'text' : 'password'} 
+            type={isConfirmVisible ? 'text' : 'password'} 
             placeholder='Confirm your password' 
             className={`input ${errors.confirmPassword ? "input-error" : ""}`} 
             name="confirmPassword"
@@ -159,11 +170,11 @@ const ResetPasswordPage = () => {
             type='button'
             variant='ghost'
             size='icon'
-            onClick={() => setIsVisible(prevState => !prevState)}
+            onClick={() => setIsConfirmVisible(prevState => !prevState)}
             className='text-muted-foreground focus-visible:ring-ring/50 absolute inset-y-0 right-0 rounded-l-none hover:bg-transparent'
             >
-              {isVisible ? <EyeOffIcon /> : <EyeIcon />}
-              <span className='sr-only'>{isVisible ? 'Hide password' : 'Show password'}</span>
+              {isConfirmVisible ? <EyeOffIcon /> : <EyeIcon />}
+              <span className='sr-only'>{isConfirmVisible ? 'Hide password' : 'Show password'}</span>
             </Button>
             </div>
           </div>
@@ -186,7 +197,7 @@ const ResetPasswordPage = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-slate-600">
             Remember your password? 
-            <Link to={"/login"} className="text-blue-600 hover:text-blue-500 font-medium">
+            <Link to={"/login"} className="text-blue-600 hover:text-blue-500 font-medium p-1">
               Sign In
             </Link>
           </p>
