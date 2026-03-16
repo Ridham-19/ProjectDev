@@ -127,3 +127,13 @@ export const getAllUsers = asyncHandler(async (req,res,next) => {
         data: {users},
     })
 })
+
+export const getAllProject = asyncHandler(async (req,res,next) => {
+    
+})
+export const getDashboardStats = asyncHandler(async (req,res,next) => {
+
+})
+export const assignSupervisor = asyncHandler(async (req,res,next) => {
+
+})
