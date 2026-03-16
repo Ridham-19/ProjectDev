@@ -20,3 +20,15 @@ export const updateUser = async (id, updateData) => {
         throw new Error(`Error updating user: ${error.message}`);
     }
 }
+
+export const getUserById = async (id) => {
+    return await User.findById(id).select("-password -resetPasswordToken -resetPasswordExpire");
+}
+
+export const deleteUser = async (id) => {
+    const user = await User.findById(id);
+    if (!user) {
+        throw new Error("User not found");
+    }
+    return await user.deleteOne();
+}

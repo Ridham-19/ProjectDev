@@ -41,3 +41,45 @@ export const updateStudent = asyncHandler(async (req,res,next) => {
         data: {user},
     })
 });
+
+export const deleteStudent = asyncHandler(async (req,res,next) => {
+    const {id} = req.params;
+    const user = await userServices.getUserById(id);
+    if(!user) {
+        return next(new ErrorHandler("Student not found",404))
+    }
+    if(user.role !== "Student") {
+        return next(new ErrorHandler("User is not a student",400))
+    }
+    await userServices.deleteUser(id);
+    res.status(200).json({
+        success: true,
+        message: "Student deleted successfully",
+    })
+})
+
+export const createTeacher = asyncHandler(async (req,res,next) => {
+    const {name, email, password, department, maxStudents, experties} = req.body;
+    if(!name || !email || !password ||!department || !maxStudents || !experties) {
+        return next(new ErrorHandler("Please provide all required fields",400))
+    }
+
+    const user = await userServices.createUser({
+        name,
+        email,
+        password,
+        department,
+        role: "Teacher",
+        maxStudents,
+        experties: Array.isArray(experties) 
+                    ? experties 
+                    : typeof experties === "string" && experties.trim(",") !== "" 
+                    ? experties.split(",").map(s => s.trim()) 
+                    : [],
+    });
+    res.status(201).json({
+        success: true,
+        message: "Teacher created successfully",
+        data: {user},
+    })
+});

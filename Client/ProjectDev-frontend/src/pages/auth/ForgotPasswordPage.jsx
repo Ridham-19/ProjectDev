@@ -121,11 +121,11 @@ const ForgotPasswordPage = () => {
       {/* Forgot Password Form */}
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-gray-200 p-8 space-y-6">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {error && (
+          {/* {error && (
             <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-sm text-red-600">{error}</p>
             </div>
-          )}
+          )} */}
 
           {/* Email Address */}
 
@@ -171,7 +171,7 @@ const ForgotPasswordPage = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-slate-600">
             Remember your password? 
-            <Link to={"/login"} className="text-blue-600 hover:text-blue-500 font-medium p-1">
+            <Link to={"/login"} className="text-sm text-blue-600 hover:text-blue-500 p-1">
               Sign In
             </Link>
           </p>
