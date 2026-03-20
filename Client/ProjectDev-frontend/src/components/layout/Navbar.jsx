@@ -82,7 +82,7 @@ const Navbar = ({ sidebarOpen, setSidebarOpen }) => {
                 </div>
                 <div className="ml-3 hidden sm:block">
                   <h1 className="text-lg font-semibold text-slate-800">
-                    Project Dev
+                    ProjectDev
                   </h1>
                 </div>
               </div>
