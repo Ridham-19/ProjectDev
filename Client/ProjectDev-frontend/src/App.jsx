@@ -45,7 +45,7 @@ const App = () => {
     dispatch(getUser());
   }, [dispatch])
 
-  const protectedRoute = ({children, allowedRoles}) => {
+  const ProtectedRoute = ({children, allowedRoles}) => {
     if(!authUser) {
       return <Navigate to="/login" replace/>
     }
@@ -55,6 +55,7 @@ const App = () => {
                             : "/student";
       return <Navigate to={redirectPath} replace/>
     }
+    return children;
   }
 
   if(isCheckingAuth && !authUser) {
@@ -75,7 +76,7 @@ const App = () => {
 
 
         {/* <--- ADMIN ROUTES ---> */}
-        <Route path="/admin" element={<protectedRoute allowedRoles={"Admin"}><DashboardLayout/></protectedRoute>}>
+        <Route path="/admin" element={<ProtectedRoute allowedRoles={"Admin"}><DashboardLayout userRole={"Admin"}/></ProtectedRoute>}>
           <Route index element={<AdminDashboard/>}/>
           <Route path="students" element={<ManageStudents/>}/>
           <Route path="teachers" element={<ManageTeachers/>}/>

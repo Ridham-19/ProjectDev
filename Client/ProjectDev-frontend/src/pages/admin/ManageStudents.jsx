@@ -2,8 +2,9 @@ import { use, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddStudent from "../../components/modal/AddStudent";
 import { createStudent, getAllUsers, updateStudent } from "@/store/slices/adminSlice";
-import { Plus } from "lucide-react";
+import { CheckCircle, Plus, TriangleAlert, Users } from "lucide-react";
 import { toggleStudentModal } from "@/store/slices/popupSlice";
+import { Button } from "@/components/ui/button";
 
 const ManageStudents = () => {
 
@@ -25,6 +26,10 @@ const ManageStudents = () => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+
   const students = useMemo(() => {
     const studentUsers = (users || []).filter(user => user.role?.toLowerCase() === "student");
 
@@ -39,14 +44,10 @@ const ManageStudents = () => {
     });
   }, [users, projects]);
 
-  useEffect(() => {
-    dispatch(getAllUsers());
-  })
 
   const departments = useMemo(()=>{
-    const set = new Set(students || [])
-      .map(student => student.department)
-      .filter(Boolean);
+    const set = new Set((students || []).map(student => student.department)
+      .filter(Boolean));
 
     return Array.from(set);
   },[students])
@@ -114,19 +115,63 @@ const ManageStudents = () => {
   return <>
     <div className="spacey-6">
       {/* Header */}
-      <div className="card">
-        <div className="card-header flex flex-col md:flex-row justify-between items-start md:items-center">
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden p-3 mb-3 pb-4">
+        <div className="p-2 border-b border-slate-100 bg-white flex flex-col md:flex-row justify-between items-start md:items-center">
           <div className="">
-            <h1 className="card-title">Manage Students</h1>
-            <p className="card-subtitle">Add, edit and manage student accounts</p>
+            <h1 className="text-xl font-bold text-slate-800 tracking-tight">Manage Students</h1>
+            <p className="text-sm text-slate-500 mt-1">Add, edit and manage student accounts</p>
           </div>
 
-          <button onClick={() => dispatch(toggleStudentModal)} className="btn-primary flex items-center space-x-2 mt-4 md:mt-0">
+          <Button onClick={() => dispatch(toggleStudentModal())} className="btn-primary flex items-center space-x-2 mt-4 md:mt-0 bg-blue-500 hover:bg-blue-600">
             <Plus className="w-5 h-5"/>
             <span>Add New Student</span>
-          </button>
+          </Button>
         </div>
       </div>
+
+
+      {/* STATS CARDS */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden p-3">
+          <div className="flex items-center">
+            <div className="p-3 rounded-lg bg-blue-100">
+              <Users className="w-6 h-6 text-blue-600"/>
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-slate-600">Total Students</p>
+              <p className="text-lg font-semibold text-slate-600">{students.length}</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden p-3">
+          <div className="flex items-center">
+            <div className="p-3 rounded-lg bg-blue-100">
+              <CheckCircle className="w-6 h-6 text-purple-600"/>
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-slate-600">Completed Projects</p>
+              <p className="text-lg font-semibold text-slate-600">{students.filter((s) => s.status === "completed").length}</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden p-3">
+          <div className="flex items-center">
+            <div className="p-3 rounded-lg bg-blue-100">
+              <TriangleAlert className="w-6 h-6 text-yellow-600"/>
+            </div>
+            <div className="ml-4">
+              <p className="text-sm font-medium text-slate-600">Unassigned</p>
+              <p className="text-lg font-semibold text-slate-600">{students.filter((s) => !s.supervisor).length}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* FILTERS */}
     </div>
   </>;
 };
