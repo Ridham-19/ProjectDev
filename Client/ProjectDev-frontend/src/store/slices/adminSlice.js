@@ -92,6 +92,17 @@ const adminSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.users = action.payload.users; 
+        state.loading = false;
+      })
+      .addCase(getAllUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(createStudent.fulfilled, (state, action) => {
         if(state.users) {
           state.users.unshift(action.payload);

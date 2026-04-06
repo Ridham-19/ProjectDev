@@ -39,6 +39,7 @@ const ManageStudents = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
+
   const students = useMemo(() => {
     const studentUsers = (users || []).filter(user => user.role?.toLowerCase() === "student");
 
@@ -120,6 +121,7 @@ const ManageStudents = () => {
     setShowDeleteModal(false);
     setStudentToDelete(null);
   }
+
 
   return <>
     <div className="spacey-6">
@@ -216,6 +218,101 @@ const ManageStudents = () => {
         </div>
       </div>
 
+      {/* STUDENTS TABLE */}
+
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden p-3 mt-3 mb-3">
+        <div className="p-3 border-b border-slate-100 bg-white">
+          <h2 className="text-xl font-bold text-slate-800 tracking-tight">Students list</h2>
+        </div>
+        <div className="overflow-x-auto"> 
+          <table className="w-full">
+            <thead className="bg-slate-50 border-b border-slate-200">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  Student Info
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  Department & Year
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  Supervisor
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  Project Title
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+
+            <tbody className="bg-white divide-y divide-slate-200">
+              {
+                filteredStudents.map(student => {
+                  return (
+                    <tr key={student._id} className="hover:bg-slate-50">
+                      <td className="px-6 py-4">
+                        <div>
+                          <div className="text-sm font-medium text-slate-900">{student.name}</div>
+                          <div className="text-sm text-slate-500">{student.email}</div>
+                          {
+                            student.studentID && (
+                              <div className="text-xs text-slate-400">ID: {student.studentID}</div>
+                            )
+                          }
+                        </div>
+                      </td>
+
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-slate-900">{student.department || "-"}</div>
+                        <div className="text-sm text-slate-500">
+                          {
+                          student.createdAt ? new Date(student.createdAt).getFullYear() : "-"
+                          }
+                        </div>
+                        
+                      </td>
+
+
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {
+                          student.supervisor ? (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-green-800 bg-gray-100 text-xs font-medium">
+                              { typeof student.supervisor === "object" ? student.supervisor.name || "-": student.supervisor }
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-red-800 bg-red-100 text-xs font-medium">
+                              {student.projectStatus === "rejected" ? "Project Rejected" : "Not assigned"}
+                            </span>
+                          )
+                        }
+                      </td>
+
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-medium text-slate-900 ">{student.projectTitle || "-"}</div>
+                      </td>
+
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <div className="flex space-x-2">
+                          <Button onClick={() => handleEdit(student)} className="text-blue-500 hover:text-blue-700 bg-slate-100 hover:bg-blue-100">
+                            Edit
+                          </Button>
+                          <Button onClick={() => handleDelete(student)} className="text-red-500 hover:text-red-700 bg-slate-100 hover:bg-red-100">
+                            Delete
+                          </Button>
+                        </div>
+                      </td>
+
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    
 
     </div>
   </>;
