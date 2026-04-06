@@ -65,4 +65,11 @@
   body {
     @apply bg-background text-foreground;
   }
+  [data-radix-collection-item]:focus, 
+button:focus, 
+[data-state="open"] {
+  outline: none !important;
+  box-shadow: none !important;
+  ring: 0 !important;
+}
 }

@@ -5,6 +5,15 @@ import { createStudent, getAllUsers, updateStudent } from "@/store/slices/adminS
 import { CheckCircle, Plus, TriangleAlert, Users } from "lucide-react";
 import { toggleStudentModal } from "@/store/slices/popupSlice";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 
 const ManageStudents = () => {
 
@@ -172,6 +181,42 @@ const ManageStudents = () => {
       </div>
 
       {/* FILTERS */}
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden p-3 mt-3 mb-3">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex-1">
+            <label className="block text-sm font-medium text-slate-700 mb-2 ">Search Students</label>
+            <input 
+              type="text" 
+              placeholder="Search by name or email..."
+              className="input-field w-full pt-1 rounded-md focus:outline-none" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              />
+          </div>
+
+          <div className="w-full md:w-48">
+            <label htmlFor="department-filter" className="block text-sm font-medium text-slate-700 mb-2 focus:outline-none">Filter by Department</label>
+            <Select defaultValue={filterDepartment} onValueChange={(e) => setFilterDepartment(e)} className="w-full md:w-48 focus:outline-none after:outline-none">
+              <SelectTrigger id={filterDepartment} className='w-full focus:outline-none'>
+                <SelectValue placeholder='All Departments' className="w-full border-slate-200"/>
+              </SelectTrigger>
+              <SelectContent className="w-full md:w-48 focus:outline-none">
+                <SelectGroup>
+                  <SelectLabel className="w-full focus:outline-none">Departments</SelectLabel>
+                  <SelectItem value='all' className="w-full focus:outline-none">All Departments</SelectItem>
+                  {departments.map((dept) => (
+                    <SelectItem key={dept} value={dept} className="w-full focus:outline-none">
+                      {dept}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </>;
 };
