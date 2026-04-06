@@ -2,9 +2,10 @@ import { use, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddStudent from "../../components/modal/AddStudent";
 import { createStudent, getAllUsers, updateStudent } from "@/store/slices/adminSlice";
-import { CheckCircle, Plus, TriangleAlert, Users } from "lucide-react";
+import { CheckCircle, Plus, TriangleAlert, Users, X } from "lucide-react";
 import { toggleStudentModal } from "@/store/slices/popupSlice";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -27,7 +28,7 @@ const ManageStudents = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [studentToDelete, setStudentToDelete] = useState(null);
 
-  const {formData, setFormData} = useState({
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     department: "",
@@ -225,7 +226,9 @@ const ManageStudents = () => {
           <h2 className="text-xl font-bold text-slate-800 tracking-tight">Students list</h2>
         </div>
         <div className="overflow-x-auto"> 
-          <table className="w-full">
+
+            {filteredStudents && filteredStudents.length > 0 ? (
+              <table className="w-full">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
@@ -309,10 +312,52 @@ const ManageStudents = () => {
               }
             </tbody>
           </table>
+            ) : (
+                <div className="bg-white rounded-md border border-slate-200 shadow-sm overflow-hidden p-3 mt-3 mb-3 flex flex-col items-center justify-center">
+                  <p className="text-sm text-slate-500 mt-2">No students found matching your search criteria.</p>
+                </div>
+              )
+            }
+          
         </div>
-      </div>
 
-    
+        {/* Edit student modal */}  
+
+        {
+          showModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+                {/* Modal header */}
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-semibold text-slate-900">
+                    Edit Student
+                  </h3>
+                  <button onClick={handleCloseModal} className="text-slate-500 hover:text-slate-700 ">
+                    <X className="w-6 h-6"/>
+                  </button>
+                </div>
+
+                {/* Modal  */}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="">
+                    <label className="block text-sm font-medium text-slate-700 mb-1 focus:outline-none">
+                      Full Name
+                    </label>
+                    <Input 
+                      type="text" 
+                      required 
+                      value={formData.name} 
+                      onChange={(e)=> setFormData({...formData, name:e.target.value})}
+                      className="!ring-0"
+                    />
+                  </div>
+                </form>
+              </div>
+            </div>
+          )
+        }
+
+      </div>
 
     </div>
   </>;
