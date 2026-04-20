@@ -1,8 +1,8 @@
 import { use, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddStudent from "../../components/modal/AddStudent";
-import { createStudent, getAllUsers, updateStudent } from "@/store/slices/adminSlice";
-import { CheckCircle, Plus, TriangleAlert, Users, X } from "lucide-react";
+import { createStudent, deleteStudent, getAllUsers, updateStudent } from "@/store/slices/adminSlice";
+import { AlertTriangle, CheckCircle, Plus, TriangleAlert, Users, X } from "lucide-react";
 import { toggleStudentModal } from "@/store/slices/popupSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -348,10 +348,85 @@ const ManageStudents = () => {
                       required 
                       value={formData.name} 
                       onChange={(e)=> setFormData({...formData, name:e.target.value})}
-                      className="!ring-0"
+                      className="!ring-0 w-full focus:outline-none"
                     />
                   </div>
+                  <div className="">
+                    <label className="block text-sm font-medium text-slate-700 mb-1 focus:outline-none">
+                      Email
+                    </label>
+                    <Input 
+                      type="email" 
+                      required 
+                      value={formData.email} 
+                      onChange={(e)=> setFormData({...formData, email:e.target.value})}
+                      className="!ring-0 w-full focus:outline-none"
+                    />
+                  </div>
+                  <div className="">
+                    <label className="block text-sm font-medium text-slate-700 mb-1 focus:outline-none">
+                      Department
+                    </label>
+
+                    <Select
+                      value={formData.department}
+                      onValueChange={(value) =>
+                        setFormData({ ...formData, department: value })
+                      }
+                    >
+                      <SelectTrigger className="!ring-0 w-full focus:outline-none mb-2">
+                        <SelectValue placeholder="Select Department" />
+                      </SelectTrigger>
+
+                      <SelectContent>
+                          <SelectItem value="Computer Science">Computer Science</SelectItem>
+                          <SelectItem value="Information Technology">Information Technology</SelectItem>
+                          <SelectItem value="AIDS">AI and Data Science</SelectItem>
+                          <SelectItem value="CSE DS">CSE Data Science</SelectItem>
+                          <SelectItem value="Electrical engineering">Electrical engineering</SelectItem>
+                          <SelectItem value="ECE">Electronics and Communication engineering</SelectItem>
+                          <SelectItem value="Mechanical engineering">Mechanical engineering</SelectItem>
+                      </SelectContent>
+
+                      
+                    </Select>
+                    
+                  </div>
+
+                  <div className="flex justify-end space-x-3 pt-4">
+                    <Button type="button" className="text-red-500 hover:text-red-700 bg-slate-100 hover:bg-red-100" onClick={handleCloseModal}>Cancel</Button>
+
+                    <Button type="submit" className="text-blue-500 hover:text-blue-700 bg-slate-100 hover:bg-blue-100" onClick={handleSubmit}>Save Changes</Button>
+                  </div>
+
                 </form>
+              </div>
+            </div>
+          )
+        }
+
+        {
+          showDeleteModal && studentToDelete && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4 shadow-xl">
+                <div className="flex items-center mb-4">
+                  <div className="flex shrink-0 w-10 h-10 mx-auto items-center justify-center rounded-full bg-red-100">
+                    <AlertTriangle className="w-6 h-6 text-red-600"/>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <h3 className="text-lg font-medium text-slate-900 mb-2">Delete Student</h3>
+                  <p className="text-sm mb-4 text-slate-500">Are you sure you want to delete{" "}
+                    <span className="font-medium">{studentToDelete.name}</span>? This action cannot be undone.
+                  </p>
+
+                  <div className="flex justify-center space-x-3">
+                    <Button onClick={cancelDelete} className="text-blue-500 hover:text-blue-700 bg-slate-100 hover:bg-blue-100">Cancel</Button>
+                    <Button onClick={confirmDelete} className="text-red-500 hover:text-red-700 bg-slate-100 hover:bg-red-100">Delete</Button>
+                  </div>
+                  
+                </div>
               </div>
             </div>
           )
