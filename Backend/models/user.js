@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
         trim: true,
         default: null,
     },
-    experties: {
+    expertise: {
         type: [String],
         default: [],
     },

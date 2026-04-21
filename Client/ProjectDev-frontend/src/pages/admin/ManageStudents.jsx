@@ -88,10 +88,7 @@ const ManageStudents = () => {
 
     if(editingStudent) {
       dispatch(updateStudent({id: editingStudent._id,data: formData}));
-    } else {
-      dispatch(createStudent(formData))
     }
-
     handleCloseModal();
   };
 
@@ -258,11 +255,7 @@ const ManageStudents = () => {
                         <div>
                           <div className="text-sm font-medium text-slate-900">{student.name}</div>
                           <div className="text-sm text-slate-500">{student.email}</div>
-                          {
-                            student.studentID && (
-                              <div className="text-xs text-slate-400">ID: {student.studentID}</div>
-                            )
-                          }
+                          
                         </div>
                       </td>
 
