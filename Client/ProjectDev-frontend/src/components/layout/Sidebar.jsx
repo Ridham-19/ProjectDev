@@ -320,6 +320,7 @@ const Sidebar = ({ open, setOpen, userRole }) => {
                 <NavLink
                   key={item.path}
                   to={item.path}
+                  end={item.name === "Home"}
                   className={({ isActive }) => `
                     flex items-center px-4 py-3 rounded-lg transition-all duration-200
                     ${isActive
@@ -428,6 +429,7 @@ const Sidebar = ({ open, setOpen, userRole }) => {
                 <NavLink
                   key={item.path}
                   to={item.path}
+                  end={item.name === "Home"}
                   className={({ isActive }) => `
               flex items-center px-4 py-3 rounded-lg transition-all duration-200
               ${isActive

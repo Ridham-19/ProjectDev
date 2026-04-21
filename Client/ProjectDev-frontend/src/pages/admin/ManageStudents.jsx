@@ -432,6 +432,10 @@ const ManageStudents = () => {
           )
         }
 
+        {
+          isCreateStudentModalOpen && <AddStudent />
+        }
+
       </div>
 
     </div>
