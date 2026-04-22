@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddTeacher from "../../components/modal/AddTeacher";
-import { createStudent, deleteStudent, getAllUsers, updateStudent } from "@/store/slices/adminSlice";
+import { createTeacher, deleteTeacher, getAllUsers, updateTeacher } from "@/store/slices/adminSlice";
 import { AlertTriangle, CheckCircle, Plus, TriangleAlert, Users, X } from "lucide-react";
-import { toggleStudentModal } from "@/store/slices/popupSlice";
+import { toggleTeacherModal } from "@/store/slices/popupSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { User } from "lucide-react";
@@ -434,6 +434,8 @@ const ManageTeachers = () => {
                         <Input 
                           type="number" 
                           required 
+                          max = {10}
+                          min={1}
                           value={formData.maxStudents} 
                           onChange={(e)=> setFormData({...formData, maxStudents: parseInt(e.target.value)})}
                           className="!ring-0 w-full focus:outline-none"
