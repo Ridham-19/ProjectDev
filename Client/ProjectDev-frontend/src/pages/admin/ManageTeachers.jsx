@@ -269,16 +269,12 @@ const ManageTeachers = () => {
                           <td className="px-6 py-4 whitespace-nowrap">
 
                             {
-                              Array.isArray(teacher.expertise) && teacher.expertise.length > 0  
-                                
+                              Array.isArray(teacher.expertise) 
+                              ? teacher.expertise.join(", ")
+                              : teacher.expertise || "-"
                             }
-                            {
-                              teacher.expertise && teacher.expertise.length>0 ? (
-                                <div className="text-sm font-medium text-slate-900">
-                                  {teacher.expertise.join(", ")}
-                                </div>
-                              ) : teacher.expertise 
-                            }
+
+                            
                           </td>
     
                           <td className="px-6 py-4 whitespace-nowrap">
@@ -305,10 +301,12 @@ const ManageTeachers = () => {
                 </tbody>
               </table>
                 ) : (
+                  filteredTeachers.length === 0 && (
                     <div className="bg-white rounded-md border border-slate-200 shadow-sm overflow-hidden p-3 mt-3 mb-3 flex flex-col items-center justify-center">
                       <p className="text-sm text-slate-500 mt-2">No teachers found matching your search criteria.</p>
                     </div>
                   )
+                )
                 }
               
             </div>
@@ -384,6 +382,64 @@ const ManageTeachers = () => {
                         </Select>
                         
                       </div>
+
+                      <div className="">
+                        <label className="block text-sm font-medium text-slate-700 mb-1 focus:outline-none">
+                          Expertise
+                        </label>
+    
+                        <Select
+                          value={formData.expertise}
+                          onValueChange={(value) =>
+                            setFormData({ ...formData, expertise: value })
+                          }
+                        >
+                          <SelectTrigger className="!ring-0 w-full focus:outline-none mb-2">
+                            <SelectValue placeholder="Select Expertise" />
+                          </SelectTrigger>
+    
+                          <SelectContent>
+                              <SelectItem value="Artificial Intelligence">Artificial Intelligence</SelectItem>
+                              <SelectItem value="Machine Learning">Machine Learning</SelectItem>
+                              <SelectItem value="Data Science">Data Science</SelectItem>
+                              <SelectItem value="Cloud Computing">Cloud Computing</SelectItem>
+                              <SelectItem value="Blockchain">Blockchain</SelectItem>
+                              <SelectItem value="Software Development">Software Development</SelectItem>
+                              <SelectItem value="Web Development">Web Development</SelectItem>
+                              <SelectItem value="Android Development">Android Development</SelectItem>
+                              <SelectItem value="IOS Development">IOS Development</SelectItem>
+                              <SelectItem value="Database Systems">Database Systems</SelectItem>
+                              <SelectItem value="Computer Networks">Computer Networks</SelectItem>
+                              <SelectItem value="Operating Systems">Operating Systems</SelectItem>
+                              <SelectItem value="Internet Of Things(IoT)">Internet Of Things(IoT)</SelectItem>
+                              <SelectItem value="Big Data Analytics">Big Data Analytics</SelectItem>
+                          </SelectContent>
+    
+                          
+                        </Select>
+                        
+                      </div>
+
+
+
+
+
+
+
+
+                      <div className="">
+                        <label className="block text-sm font-medium text-slate-700 mb-1 focus:outline-none">
+                          Max Students
+                        </label>
+                        <Input 
+                          type="number" 
+                          required 
+                          value={formData.maxStudents} 
+                          onChange={(e)=> setFormData({...formData, maxStudents: parseInt(e.target.value)})}
+                          className="!ring-0 w-full focus:outline-none"
+                        />
+                      </div>
+                        
     
                       <div className="flex justify-end space-x-3 pt-4">
                         <Button type="button" className="text-red-500 hover:text-red-700 bg-slate-100 hover:bg-red-100" onClick={handleCloseModal}>Cancel</Button>
